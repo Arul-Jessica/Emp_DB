@@ -1,6 +1,9 @@
+
 from flask import Flask, render_template, request, redirect
 import sqlite3
-from urllib.parse import quote  
+from urllib.parse import quote  # Correct import for the quote function
+
+
 
 app = Flask(__name__)
 
@@ -51,4 +54,7 @@ def add_employee():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
+
+
+

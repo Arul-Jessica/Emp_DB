@@ -1,9 +1,1 @@
 Flask==2.0.0
-
-SqlLite
-
-JQuery
-
-HTML ---- JS
-
-CSS
