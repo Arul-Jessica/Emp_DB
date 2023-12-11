@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lala.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_employee',
+                    data: formData,
+                    success: function(response) {
+                        updateTable(response.employees);
+                        $('form')[0].reset();
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            function updateTable(employees) {
+                var tableBody = '';
+                for (var i = 0; i < employees.length; i++) {
+                    tableBody += '<tr>';
+                    tableBody += '<td>' + employees[i][0] + '</td>';
+                    tableBody += '<td>' + employees[i][1] + '</td>';
+                    tableBody += '<td>' + employees[i][2] + '</td>';
+                    tableBody += '<td>' + employees[i][3] + '</td>';
+                    tableBody += '<td>' + employees[i][4] + '</td>';
+                    tableBody += '<td>' + employees[i][5] + '</td>';
+                    tableBody += '<td>' + employees[i][6] + '</td>';
+                    tableBody += '</tr>';
+                }
+                $('table tbody').html(tableBody);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Employee Details</h1>
+    
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label for="department">Department:</label>
+        <input type="text" name="department" required><br>
+
+        <label for="designation">Designation:</label>
+        <input type="text" name="designation" required><br>
+
+        <label for="salary">Salary:</label>
+        <input type="number" name="salary" required><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="text" name="dob" placeholder="YYYY-MM-DD" required><br>
+
+        <label for="address">Address:</label>
+        <input type="text" name="address" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Salary</th>
+            <th>DOB</th>
+            <th>Address</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <td>{{ employee[0] }}</td>
+            <td>{{ employee[1] }}</td>
+            <td>{{ employee[2] }}</td>
+            <td>{{ employee[3] }}</td>
+            <td>{{ employee[4] }}</td>
+            <td>{{ employee[5] }}</td>
+            <td>{{ employee[6] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
+
